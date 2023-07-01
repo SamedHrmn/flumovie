@@ -1,7 +1,7 @@
-import 'package:flumovie/features/movie/domain/popular_movie.dart';
+import 'package:flumovie/features/movie/application/popular_movie_dto.dart';
 
 class PopularMoviesResult {
   PopularMoviesResult(this.movies, {this.error});
-  final PopularMovie? movies;
+  final PopularMovieDTO? movies;
   final String? error;
 }

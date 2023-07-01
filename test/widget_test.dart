@@ -9,6 +9,7 @@ import 'dart:developer';
 
 import 'package:flumovie/api/api_client.dart';
 import 'package:flumovie/api/movie_api_helper.dart';
+import 'package:flumovie/features/movie/application/popular_movie_dto.dart';
 import 'package:flumovie/features/movie/data/i_movie_repository.dart';
 import 'package:flumovie/features/movie/domain/movie.dart';
 import 'package:flumovie/features/movie/domain/popular_movie.dart';
@@ -52,7 +53,7 @@ class MockMovieRepository implements IMovieRepository {
       log(popularMovieResponse.data!.toString(), name: 'Popular movie data');
 
       return PopularMoviesResult(
-        PopularMovie.fromJson(popularMovieResponse.data!),
+        PopularMovieDTO.fromDomain(PopularMovie.fromJson(popularMovieResponse.data!)),
       );
     } catch (e) {
       return PopularMoviesResult(null, error: e.toString());
@@ -78,6 +79,7 @@ void main() async {
       apiClient: ApiClient(),
       apiHelper: apiHelper,
     );
-    await mockMovieRepository.getPopularMovies();
+    final popularMovieResult = await mockMovieRepository.getPopularMovies();
+    expect(popularMovieResult.movies, isNotNull);
   });
 }
