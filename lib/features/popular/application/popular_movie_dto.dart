@@ -1,15 +1,14 @@
-import 'package:flumovie/features/movie/domain/popular_movie.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
+import 'package:flumovie/features/popular/domain/popular_movie.dart';
+import 'package:json_annotation/json_annotation.dart';
 part 'popular_movie_dto.g.dart';
 
 @JsonSerializable()
 class PopularMovieDTO {
-  factory PopularMovieDTO.fromJson(Map<String, dynamic> json) => _$PopularMovieDTOFromJson(json);
   const PopularMovieDTO({
     required this.page,
     required this.popularMovies,
   });
+  factory PopularMovieDTO.fromJson(Map<String, dynamic> json) => _$PopularMovieDTOFromJson(json);
 
   factory PopularMovieDTO.fromDomain(PopularMovie popularMovie) {
     return PopularMovieDTO(
@@ -20,7 +19,7 @@ class PopularMovieDTO {
               id: e.id,
               title: e.title,
               description: e.overview,
-              imageUrl: e.poster_path,
+              imageUrl: e.posterPath,
             ),
           )
           .toList(),
@@ -34,13 +33,13 @@ class PopularMovieDTO {
 
 @JsonSerializable()
 class _PopularMovieDetail {
-  factory _PopularMovieDetail.fromJson(Map<String, dynamic> json) => _$PopularMovieDetailFromJson(json);
   _PopularMovieDetail({
     required this.id,
     required this.title,
     required this.description,
     required this.imageUrl,
   });
+  factory _PopularMovieDetail.fromJson(Map<String, dynamic> json) => _$PopularMovieDetailFromJson(json);
   final int? id;
   final String? title;
   final String? description;

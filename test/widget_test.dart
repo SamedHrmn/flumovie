@@ -9,11 +9,15 @@ import 'dart:developer';
 
 import 'package:flumovie/api/api_client.dart';
 import 'package:flumovie/api/movie_api_helper.dart';
-import 'package:flumovie/features/movie/application/popular_movie_dto.dart';
-import 'package:flumovie/features/movie/data/i_movie_repository.dart';
-import 'package:flumovie/features/movie/domain/movie.dart';
-import 'package:flumovie/features/movie/domain/popular_movie.dart';
-import 'package:flumovie/features/movie/domain/popular_movie_result.dart';
+import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
+import 'package:flumovie/features/detail/domain/movie_detail.dart';
+import 'package:flumovie/features/detail/domain/movie_detail_result.dart';
+import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
+import 'package:flumovie/features/popular/domain/popular_movie.dart';
+import 'package:flumovie/features/popular/domain/popular_movie_result.dart';
+
+import 'package:flumovie/shared/s_data/i_movie_repository.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -27,7 +31,7 @@ class MockMovieRepository implements IMovieRepository {
   final MovieApiHelper apiHelper;
 
   @override
-  Future<Movie?> getMovie({required int movieId}) async {
+  Future<MovieDetailResult> getMovieDetail({required int movieId}) async {
     try {
       final movieResponse = await apiClient.dio.getUri<Map<String, dynamic>>(
         apiHelper.movie(movieId: movieId),
@@ -36,9 +40,13 @@ class MockMovieRepository implements IMovieRepository {
       expect(movieResponse.data, isNotNull, reason: 'Movie response data is null');
       log(movieResponse.data!.toString(), name: 'Movie data');
 
-      return Movie();
+      return MovieDetailResult(
+        MovieDetailDTO(
+          movieDetail: MovieDetail.fromJson(movieResponse.data!),
+        ),
+      );
     } catch (e) {
-      return null;
+      return MovieDetailResult(MovieDetailDTO(movieDetail: null), error: e.toString());
     }
   }
 
@@ -71,7 +79,7 @@ void main() async {
       apiClient: ApiClient(),
       apiHelper: apiHelper,
     );
-    await mockMovieRepository.getMovie(movieId: 5353);
+    await mockMovieRepository.getMovieDetail(movieId: 5353);
   });
 
   test('Popular Movie Test', () async {

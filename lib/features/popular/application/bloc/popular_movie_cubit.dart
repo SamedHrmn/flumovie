@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:flumovie/features/movie/application/bloc/popular_movie_state.dart';
-import 'package:flumovie/features/movie/data/dio_movie_repository.dart';
+import 'package:flumovie/features/popular/application/bloc/popular_movie_state.dart';
+import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class PopularMovieCubit extends HydratedCubit<PopularMovieState> {

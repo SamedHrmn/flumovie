@@ -1,4 +1,4 @@
-import 'package:flumovie/features/movie/application/popular_movie_dto.dart';
+import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
 
 class PopularMoviesResult {
   PopularMoviesResult(this.movies, {this.error});

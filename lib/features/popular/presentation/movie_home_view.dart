@@ -1,9 +1,11 @@
 import 'package:flumovie/components/custom/flu_network_image.dart';
 import 'package:flumovie/components/custom/flumovie_scaffold.dart';
-import 'package:flumovie/features/movie/application/bloc/popular_movie_cubit.dart';
-import 'package:flumovie/features/movie/application/bloc/popular_movie_state.dart';
+import 'package:flumovie/features/popular/application/bloc/popular_movie_state.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../application/bloc/popular_movie_cubit.dart';
 
 class MovieHomeView extends StatefulWidget {
   const MovieHomeView({super.key});

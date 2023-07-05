@@ -1,13 +1,16 @@
 import 'package:flumovie/api/api_client.dart';
 import 'package:flumovie/api/movie_api_helper.dart';
-import 'package:flumovie/features/movie/application/bloc/popular_movie_cubit.dart';
-import 'package:flumovie/features/movie/data/dio_movie_repository.dart';
-import 'package:flumovie/features/movie/presentation/movie_home_view.dart';
+
+import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'features/popular/application/bloc/popular_movie_cubit.dart';
+import 'features/popular/presentation/movie_home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
