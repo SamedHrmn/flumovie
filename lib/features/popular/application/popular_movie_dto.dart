@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'popular_movie_dto.g.dart';
 
 @JsonSerializable()
-class PopularMovieDTO {
+final class PopularMovieDTO {
   const PopularMovieDTO({
     required this.page,
     required this.popularMovies,
@@ -12,13 +12,13 @@ class PopularMovieDTO {
   factory PopularMovieDTO.fromJson(Map<String, dynamic> json) => _$PopularMovieDTOFromJson(json);
 
   factory PopularMovieDTO.fromDomain(PopularMovie popularMovie, {int limit = 8}) {
-    final limitedPopularMovies = <_PopularMovieDetail>[];
+    final limitedPopularMovies = <PopularMovieDetail>[];
 
     popularMovie.results?.forEach(
       (e) {
         if (limitedPopularMovies.length >= limit) return;
 
-        final m = _PopularMovieDetail(
+        final m = PopularMovieDetail(
           id: e.id,
           title: e.title,
           description: e.overview,
@@ -35,20 +35,20 @@ class PopularMovieDTO {
   }
   final int? page;
 
-  final List<_PopularMovieDetail>? popularMovies;
+  final List<PopularMovieDetail>? popularMovies;
 
   Map<String, dynamic> toJson() => _$PopularMovieDTOToJson(this);
 }
 
 @JsonSerializable()
-class _PopularMovieDetail {
-  _PopularMovieDetail({
+final class PopularMovieDetail {
+  PopularMovieDetail({
     required this.id,
     required this.title,
     required this.description,
     required this.imageUrl,
   });
-  factory _PopularMovieDetail.fromJson(Map<String, dynamic> json) => _$PopularMovieDetailFromJson(json);
+  factory PopularMovieDetail.fromJson(Map<String, dynamic> json) => _$PopularMovieDetailFromJson(json);
   final int? id;
   final String? title;
   final String? description;

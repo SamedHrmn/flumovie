@@ -10,7 +10,7 @@ PopularMovieDTO _$PopularMovieDTOFromJson(Map<String, dynamic> json) =>
     PopularMovieDTO(
       page: json['page'] as int?,
       popularMovies: (json['popularMovies'] as List<dynamic>?)
-          ?.map((e) => _PopularMovieDetail.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => PopularMovieDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -20,15 +20,15 @@ Map<String, dynamic> _$PopularMovieDTOToJson(PopularMovieDTO instance) =>
       'popularMovies': instance.popularMovies,
     };
 
-_PopularMovieDetail _$PopularMovieDetailFromJson(Map<String, dynamic> json) =>
-    _PopularMovieDetail(
+PopularMovieDetail _$PopularMovieDetailFromJson(Map<String, dynamic> json) =>
+    PopularMovieDetail(
       id: json['id'] as int?,
       title: json['title'] as String?,
       description: json['description'] as String?,
       imageUrl: json['imageUrl'] as String?,
     );
 
-Map<String, dynamic> _$PopularMovieDetailToJson(_PopularMovieDetail instance) =>
+Map<String, dynamic> _$PopularMovieDetailToJson(PopularMovieDetail instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

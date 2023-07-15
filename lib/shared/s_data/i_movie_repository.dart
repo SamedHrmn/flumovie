@@ -1,8 +1,7 @@
-import 'package:flumovie/features/detail/domain/movie_detail_result.dart';
-
-import 'package:flumovie/features/popular/domain/popular_movie_result.dart';
+import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
+import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
 
 abstract interface class IMovieRepository {
-  Future<MovieDetailResult> getMovieDetail({required int movieId});
-  Future<PopularMoviesResult> getPopularMovies({int page = 1, int limit = 8});
+  Future<MovieDetailDTO?> getMovieDetail({required int movieId});
+  Future<PopularMovieDTO?> getPopularMovies({int page = 1, int limit = 8});
 }

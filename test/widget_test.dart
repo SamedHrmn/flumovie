@@ -11,10 +11,9 @@ import 'package:flumovie/core/api/api_client.dart';
 import 'package:flumovie/core/api/movie_api_helper.dart';
 import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
-import 'package:flumovie/features/detail/domain/movie_detail_result.dart';
+
 import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
 import 'package:flumovie/features/popular/domain/popular_movie.dart';
-import 'package:flumovie/features/popular/domain/popular_movie_result.dart';
 
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
 
@@ -31,7 +30,7 @@ class MockMovieRepository implements IMovieRepository {
   final MovieApiHelper apiHelper;
 
   @override
-  Future<MovieDetailResult> getMovieDetail({required int movieId}) async {
+  Future<MovieDetailDTO?> getMovieDetail({required int movieId}) async {
     try {
       final movieResponse = await apiClient.dio.getUri<Map<String, dynamic>>(
         apiHelper.movie(movieId: movieId),
@@ -40,18 +39,16 @@ class MockMovieRepository implements IMovieRepository {
       expect(movieResponse.data, isNotNull, reason: 'Movie response data is null');
       log(movieResponse.data!.toString(), name: 'Movie data');
 
-      return MovieDetailResult(
-        MovieDetailDTO(
-          movieDetail: MovieDetail.fromJson(movieResponse.data!),
-        ),
+      return MovieDetailDTO(
+        movieDetail: MovieDetail.fromJson(movieResponse.data!),
       );
     } catch (e) {
-      return MovieDetailResult(MovieDetailDTO(movieDetail: null), error: e.toString());
+      return null;
     }
   }
 
   @override
-  Future<PopularMoviesResult> getPopularMovies({int page = 1, int limit = 8}) async {
+  Future<PopularMovieDTO?> getPopularMovies({int page = 1, int limit = 8}) async {
     try {
       final popularMovieResponse = await apiClient.dio.getUri<Map<String, dynamic>>(
         apiHelper.popularMovie(page: page),
@@ -60,11 +57,9 @@ class MockMovieRepository implements IMovieRepository {
       expect(popularMovieResponse.data, isNotNull);
       log(popularMovieResponse.data!.toString(), name: 'Popular movie data');
 
-      return PopularMoviesResult(
-        PopularMovieDTO.fromDomain(PopularMovie.fromJson(popularMovieResponse.data!)),
-      );
+      return PopularMovieDTO.fromDomain(PopularMovie.fromJson(popularMovieResponse.data!));
     } catch (e) {
-      return PopularMoviesResult(null, error: e.toString());
+      return null;
     }
   }
 }
@@ -87,7 +82,7 @@ void main() async {
       apiClient: ApiClient(),
       apiHelper: apiHelper,
     );
-    final popularMovieResult = await mockMovieRepository.getPopularMovies();
-    expect(popularMovieResult.movies, isNotNull);
+    final popularMovieDTO = await mockMovieRepository.getPopularMovies();
+    expect(popularMovieDTO, isNotNull);
   });
 }

@@ -1,12 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flumovie_scaffold.dart';
-import 'package:flumovie/features/popular/application/bloc/popular_movie_state.dart';
+import 'package:flumovie/features/detail/presentation/movie_detail_view.dart';
+
+import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../application/bloc/popular_movie_cubit.dart';
+import '../application/cubit/popular_movie_cubit.dart';
+import '../application/cubit/popular_movie_state.dart';
 
 class MovieHomeView extends StatefulWidget {
   const MovieHomeView({super.key});
@@ -35,19 +38,8 @@ class _MovieHomeViewState extends State<MovieHomeView> {
 
                     return CarouselSlider.builder(
                       itemCount: popularMovies.length,
-                      itemBuilder: (context, index, realIndex) => SizedBox(
-                        width: 120,
-                        child: Column(
-                          children: [
-                            FluNetworkImage(
-                              url: popularMovies[index].imageUrl,
-                            ),
-                            Text(
-                              popularMovies[index].title ?? '-',
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ],
-                        ),
+                      itemBuilder: (context, index, realIndex) => _PopularMovieCard(
+                        popularMovieDetail: popularMovies[index],
                       ),
                       options: CarouselOptions(
                         enlargeCenterPage: true,
@@ -61,6 +53,39 @@ class _MovieHomeViewState extends State<MovieHomeView> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PopularMovieCard extends StatelessWidget {
+  const _PopularMovieCard({
+    required this.popularMovieDetail,
+  });
+
+  final PopularMovieDetail popularMovieDetail;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => MovieDetailView(movieId: popularMovieDetail.id),
+        ),
+      ),
+      child: SizedBox(
+        width: 120,
+        child: Column(
+          children: [
+            FluNetworkImage(
+              url: popularMovieDetail.imageUrl,
+            ),
+            Text(
+              popularMovieDetail.title ?? '-',
+              style: const TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flumovie/features/popular/application/bloc/popular_movie_state.dart';
+import 'package:flumovie/features/popular/application/cubit/popular_movie_state.dart';
 import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -29,15 +29,14 @@ class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
         return;
       }
 
-      final movieResult = await dioMovieRepository.getPopularMovies();
-      if (movieResult.movies == null) {
+      final movieDTO = await dioMovieRepository.getPopularMovies();
+      if (movieDTO == null) {
         emit(state.copyWith(status: PopularMovieStatus.failure));
-        log(movieResult.error.toString());
+
         return;
       }
 
-      final movieDto = movieResult.movies!;
-      emit(state.copyWith(status: PopularMovieStatus.success, popularMovieDTO: movieDto));
+      emit(state.copyWith(status: PopularMovieStatus.success, popularMovieDTO: movieDTO));
     } catch (e) {
       log(e.toString());
       emit(state.copyWith(status: PopularMovieStatus.failure));
