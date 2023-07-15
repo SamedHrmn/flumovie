@@ -1,4 +1,4 @@
-import 'package:flumovie/components/base/base_network_image.dart';
+import 'package:flumovie/core/components/base/base_network_image.dart';
 import 'package:flutter/material.dart';
 
 class FluNetworkImage extends StatelessWidget {

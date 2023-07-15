@@ -7,8 +7,8 @@
 
 import 'dart:developer';
 
-import 'package:flumovie/api/api_client.dart';
-import 'package:flumovie/api/movie_api_helper.dart';
+import 'package:flumovie/core/api/api_client.dart';
+import 'package:flumovie/core/api/movie_api_helper.dart';
 import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 import 'package:flumovie/features/detail/domain/movie_detail_result.dart';
@@ -51,7 +51,7 @@ class MockMovieRepository implements IMovieRepository {
   }
 
   @override
-  Future<PopularMoviesResult> getPopularMovies({int page = 1}) async {
+  Future<PopularMoviesResult> getPopularMovies({int page = 1, int limit = 8}) async {
     try {
       final popularMovieResponse = await apiClient.dio.getUri<Map<String, dynamic>>(
         apiHelper.popularMovie(page: page),

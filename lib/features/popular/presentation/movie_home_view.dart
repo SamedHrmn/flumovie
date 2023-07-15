@@ -1,5 +1,6 @@
-import 'package:flumovie/components/custom/flu_network_image.dart';
-import 'package:flumovie/components/custom/flumovie_scaffold.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flumovie/core/components/custom/flu_network_image.dart';
+import 'package:flumovie/core/components/custom/flumovie_scaffold.dart';
 import 'package:flumovie/features/popular/application/bloc/popular_movie_state.dart';
 
 import 'package:flutter/material.dart';
@@ -31,10 +32,10 @@ class _MovieHomeViewState extends State<MovieHomeView> {
                     return const Text('An error occured');
                   case PopularMovieStatus.success:
                     final popularMovies = state.popularMovieDTO!.popularMovies!;
-                    return ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => SizedBox(
+
+                    return CarouselSlider.builder(
+                      itemCount: popularMovies.length,
+                      itemBuilder: (context, index, realIndex) => SizedBox(
                         width: 120,
                         child: Column(
                           children: [
@@ -48,8 +49,12 @@ class _MovieHomeViewState extends State<MovieHomeView> {
                           ],
                         ),
                       ),
-                      separatorBuilder: (context, index) => const SizedBox(width: 16),
-                      itemCount: popularMovies.length,
+                      options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                        viewportFraction: 0.6,
+                        disableCenter: true,
+                      ),
                     );
                 }
               },

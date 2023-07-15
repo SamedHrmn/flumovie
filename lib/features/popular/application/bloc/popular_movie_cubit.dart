@@ -7,14 +7,20 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
   PopularMovieCubit({
     required this.dioMovieRepository,
+    this.clearCache = false,
   }) : super(const PopularMovieState(status: PopularMovieStatus.initial)) {
-    hydrate();
     getPopularMovies();
   }
 
   final DioMovieRepository dioMovieRepository;
+  final bool clearCache;
 
   Future<void> getPopularMovies() async {
+    if (clearCache) {
+      await HydratedBloc.storage.clear();
+      await HydratedBloc.storage.close();
+    }
+
     try {
       emit(state.copyWith(status: PopularMovieStatus.loading));
 
@@ -40,8 +46,8 @@ class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
 
   @override
   PopularMovieState? fromJson(Map<String, dynamic> json) {
+    if (clearCache) return null;
     log('Popular movies from hydratedbloc!', name: 'PopularMovieCubit');
-
     return PopularMovieState.fromJson(json);
   }
 
