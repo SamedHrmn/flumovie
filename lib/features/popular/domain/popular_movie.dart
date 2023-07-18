@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart' show JsonKey, JsonSerializ
 part 'popular_movie.g.dart';
 
 @JsonSerializable()
-class PopularMovie {
+final class PopularMovie {
   const PopularMovie({
     this.page,
     this.results,

@@ -1,5 +1,6 @@
 import 'package:flumovie/core/api/api_client.dart';
 import 'package:flumovie/core/api/movie_api_helper.dart';
+import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/movie_detail_cubit.dart';
 import 'package:flumovie/features/popular/application/cubit/popular_movie_cubit.dart';
 import 'package:flumovie/features/popular/presentation/movie_home_view.dart';
@@ -28,13 +29,13 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => PopularMovieCubit(
-              dioMovieRepository: DioMovieRepository(
-                client: ApiClient(),
-                apiHelper: MovieApiHelper(
-                  apiKey: dotenv.get('API_KEY'),
-                ),
+            dioMovieRepository: DioMovieRepository(
+              client: ApiClient(),
+              apiHelper: MovieApiHelper(
+                apiKey: dotenv.get('API_KEY'),
               ),
-              clearCache: true),
+            ),
+          ),
         ),
         BlocProvider(
           create: (context) => MovieDetailCubit(
@@ -46,10 +47,14 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        BlocProvider(
+          create: (context) => AddFavoriteCubit(),
+        ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MovieHomeView(),
+        theme: ThemeData.light(useMaterial3: true),
+        home: const MovieHomeView(),
       ),
     );
   }

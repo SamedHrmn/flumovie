@@ -6,7 +6,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class MovieDetailCubit extends HydratedCubit<MovieDetailState> {
   MovieDetailCubit({required this.dioMovieRepository}) : super(const MovieDetailState(status: MovieDetailStatus.initial));
-
   final DioMovieRepository dioMovieRepository;
 
   Future<void> getMovieDetail({required int? movieId}) async {
@@ -14,6 +13,11 @@ class MovieDetailCubit extends HydratedCubit<MovieDetailState> {
       emit(state.copyWith(status: MovieDetailStatus.loading));
       if (movieId == null) {
         emit(state.copyWith(status: MovieDetailStatus.failure));
+        return;
+      }
+
+      if (state.movieDetailDTO != null) {
+        emit(state.copyWith(status: MovieDetailStatus.success));
         return;
       }
 
