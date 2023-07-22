@@ -11,7 +11,10 @@ class FlumovieScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScaffold(
       backgroundColor: ColorConstant.scaffoldBackgroundColor,
-      body: SafeArea(top: false, child: child),
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: SafeArea(top: false, child: child),
+      ),
     );
   }
 }

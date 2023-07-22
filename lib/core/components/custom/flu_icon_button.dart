@@ -3,7 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum FluIcon {
-  back(18);
+  back(18),
+  home(18),
+  search(18),
+  profile(18);
 
   final double size;
 
@@ -13,6 +16,12 @@ enum FluIcon {
     switch (this) {
       case FluIcon.back:
         return _icon(Icons.arrow_back_ios_new_outlined);
+      case FluIcon.home:
+        return _icon(Icons.home);
+      case FluIcon.search:
+        return _icon(Icons.search);
+      case FluIcon.profile:
+        return _icon(Icons.balcony);
     }
   }
 

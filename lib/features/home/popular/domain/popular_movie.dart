@@ -25,10 +25,10 @@ final class PopularMovie {
 @JsonSerializable()
 class _Results {
   const _Results({
+    required this.id,
     this.adult,
     this.backdropPath,
     this.genreIds,
-    required this.id,
     this.originalLanguage,
     this.originalTitle,
     this.overview,

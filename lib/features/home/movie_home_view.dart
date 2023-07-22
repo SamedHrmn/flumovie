@@ -5,14 +5,12 @@ import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/favorites_state.dart';
 import 'package:flumovie/features/detail/presentation/movie_detail_view.dart';
-
-import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
+import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
+import 'package:flumovie/features/home/popular/application/cubit/popular_movie_state.dart';
+import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../application/cubit/popular_movie_cubit.dart';
-import '../application/cubit/popular_movie_state.dart';
 
 class MovieHomeView extends StatefulWidget {
   const MovieHomeView({super.key});

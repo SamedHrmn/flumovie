@@ -16,7 +16,7 @@ class MovieDetailCubit extends HydratedCubit<MovieDetailState> {
         return;
       }
 
-      if (state.movieDetailDTO != null) {
+      if (state.movieDetailDTO != null && movieId == state.movieDetailDTO!.movieDetail!.id) {
         emit(state.copyWith(status: MovieDetailStatus.success));
         return;
       }

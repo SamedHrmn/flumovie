@@ -1,4 +1,4 @@
-import 'package:flumovie/features/popular/domain/popular_movie.dart';
+import 'package:flumovie/features/home/popular/domain/popular_movie.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'popular_movie_dto.g.dart';

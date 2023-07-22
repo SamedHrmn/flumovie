@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flumovie/features/popular/application/cubit/popular_movie_state.dart';
+import 'package:flumovie/features/home/popular/application/cubit/popular_movie_state.dart';
 import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 

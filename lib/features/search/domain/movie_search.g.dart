@@ -1,21 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'popular_movie.dart';
+part of 'movie_search.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PopularMovie _$PopularMovieFromJson(Map<String, dynamic> json) => PopularMovie(
+MovieSearch _$MovieSearchFromJson(Map<String, dynamic> json) => MovieSearch(
       page: json['page'] as int?,
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => _Results.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Result.fromJson(e as Map<String, dynamic>))
           .toList(),
       totalPages: json['total_pages'] as int?,
       totalResults: json['total_results'] as int?,
     );
 
-Map<String, dynamic> _$PopularMovieToJson(PopularMovie instance) =>
+Map<String, dynamic> _$MovieSearchToJson(MovieSearch instance) =>
     <String, dynamic>{
       'page': instance.page,
       'results': instance.results,
@@ -23,7 +23,7 @@ Map<String, dynamic> _$PopularMovieToJson(PopularMovie instance) =>
       'total_results': instance.totalResults,
     };
 
-_Results _$ResultsFromJson(Map<String, dynamic> json) => _Results(
+Result _$ResultFromJson(Map<String, dynamic> json) => Result(
       adult: json['adult'] as bool?,
       backdropPath: json['backdrop_path'] as String?,
       genreIds:
@@ -34,14 +34,16 @@ _Results _$ResultsFromJson(Map<String, dynamic> json) => _Results(
       overview: json['overview'] as String?,
       popularity: (json['popularity'] as num?)?.toDouble(),
       posterPath: json['poster_path'] as String?,
-      releaseDate: json['release_date'] as String?,
+      releaseDate: json['release_date'] == null
+          ? null
+          : DateTime.parse(json['release_date'] as String),
       title: json['title'] as String?,
       video: json['video'] as bool?,
       voteAverage: (json['vote_average'] as num?)?.toDouble(),
       voteCount: json['vote_count'] as int?,
     );
 
-Map<String, dynamic> _$ResultsToJson(_Results instance) => <String, dynamic>{
+Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'adult': instance.adult,
       'backdrop_path': instance.backdropPath,
       'genre_ids': instance.genreIds,
@@ -51,7 +53,7 @@ Map<String, dynamic> _$ResultsToJson(_Results instance) => <String, dynamic>{
       'overview': instance.overview,
       'popularity': instance.popularity,
       'poster_path': instance.posterPath,
-      'release_date': instance.releaseDate,
+      'release_date': instance.releaseDate?.toIso8601String(),
       'title': instance.title,
       'video': instance.video,
       'vote_average': instance.voteAverage,

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
+
+import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 

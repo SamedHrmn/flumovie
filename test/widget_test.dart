@@ -11,9 +11,11 @@ import 'package:flumovie/core/api/api_client.dart';
 import 'package:flumovie/core/api/movie_api_helper.dart';
 import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
+import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
+import 'package:flumovie/features/home/popular/domain/popular_movie.dart';
 
-import 'package:flumovie/features/popular/application/popular_movie_dto.dart';
-import 'package:flumovie/features/popular/domain/popular_movie.dart';
+import 'package:flumovie/features/search/application/movie_search_dto.dart';
+import 'package:flumovie/features/search/domain/movie_search.dart';
 
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
 
@@ -62,6 +64,22 @@ class MockMovieRepository implements IMovieRepository {
       return null;
     }
   }
+
+  @override
+  Future<MovieSearchDTO?> searchMovie({required String title}) async {
+    try {
+      final searchResponse = await apiClient.dio.getUri<Map<String, dynamic>>(apiHelper.searchMovie(query: title));
+
+      expect(searchResponse.data, isNotNull);
+      log(searchResponse.data!.toString(), name: 'Search movie data for $title');
+
+      return MovieSearchDTO.fromDomain(
+        MovieSearch.fromJson(searchResponse.data!),
+      );
+    } catch (e) {
+      return null;
+    }
+  }
 }
 
 void main() async {
@@ -74,7 +92,7 @@ void main() async {
       apiClient: ApiClient(),
       apiHelper: apiHelper,
     );
-    await mockMovieRepository.getMovieDetail(movieId: 5353);
+    await mockMovieRepository.getMovieDetail(movieId: 624860);
   });
 
   test('Popular Movie Test', () async {
@@ -84,5 +102,23 @@ void main() async {
     );
     final popularMovieDTO = await mockMovieRepository.getPopularMovies();
     expect(popularMovieDTO, isNotNull);
+  });
+
+  test('Search Movie Test For Success', () async {
+    final mockMovieRepository = MockMovieRepository(
+      apiClient: ApiClient(),
+      apiHelper: apiHelper,
+    );
+    final searchMovieDTO = await mockMovieRepository.searchMovie(title: 'Lord of the Rings: Two Towers');
+    expect(searchMovieDTO!.movieSearch!.totalResults, greaterThan(0));
+  });
+
+  test('Search Movie Test For Not Found', () async {
+    final mockMovieRepository = MockMovieRepository(
+      apiClient: ApiClient(),
+      apiHelper: apiHelper,
+    );
+    final searchMovieDTO = await mockMovieRepository.searchMovie(title: '');
+    expect(searchMovieDTO!.movieSearch!.totalResults, equals(0));
   });
 }
