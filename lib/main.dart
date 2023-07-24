@@ -1,10 +1,14 @@
 import 'package:flumovie/core/api/api_client.dart';
 import 'package:flumovie/core/api/movie_api_helper.dart';
+import 'package:flumovie/core/gen/assets.gen.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/movie_detail_cubit.dart';
-
-import 'package:flumovie/features/entry/flu_bottombar_view.dart';
+import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
+import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
+import 'package:flumovie/features/entry/onboard/onboard_view.dart';
+import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_cubit.dart';
+import 'package:flumovie/shared/s_cubit/page_manager_cubit.dart';
 import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'features/home/popular/application/cubit/popular_movie_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,11 +65,26 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AddFavoriteCubit(),
         ),
+        BlocProvider(
+          create: (context) => OnBoardCubit(
+            viewData: OnboardDTO(
+              avatarAssets: [
+                Assets.icons.avatar1.path,
+                Assets.icons.avatar2.path,
+                Assets.icons.avatar3.path,
+                Assets.icons.avatar4.path,
+              ],
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => PageManagerCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
-        home: const FluBottomBarView(),
+        home: const OnboardView(),
       ),
     );
   }

@@ -32,10 +32,30 @@ class $AssetsFontGen {
       [robotoBlack, robotoBold, robotoLight, robotoMedium, robotoRegular];
 }
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// File path: assets/icons/avatar1.png
+  AssetGenImage get avatar1 => const AssetGenImage('assets/icons/avatar1.png');
+
+  /// File path: assets/icons/avatar2.png
+  AssetGenImage get avatar2 => const AssetGenImage('assets/icons/avatar2.png');
+
+  /// File path: assets/icons/avatar3.png
+  AssetGenImage get avatar3 => const AssetGenImage('assets/icons/avatar3.png');
+
+  /// File path: assets/icons/avatar4.png
+  AssetGenImage get avatar4 => const AssetGenImage('assets/icons/avatar4.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [avatar1, avatar2, avatar3, avatar4];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsFontGen font = $AssetsFontGen();
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
 }
 
 class AssetGenImage {
