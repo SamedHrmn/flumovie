@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:flumovie/features/detail/application/cubit/movie_detail_state.dart';
-import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
+import 'package:flumovie/shared/s_data/i_movie_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class MovieDetailCubit extends HydratedCubit<MovieDetailState> {
-  MovieDetailCubit({required this.dioMovieRepository}) : super(const MovieDetailState(status: MovieDetailStatus.initial));
-  final DioMovieRepository dioMovieRepository;
+  MovieDetailCubit({required this.movieRepository}) : super(const MovieDetailState(status: MovieDetailStatus.initial));
+  final IMovieRepository movieRepository;
 
   Future<void> getMovieDetail({required int? movieId}) async {
     try {
@@ -21,7 +21,7 @@ class MovieDetailCubit extends HydratedCubit<MovieDetailState> {
         return;
       }
 
-      final detailDTO = await dioMovieRepository.getMovieDetail(movieId: movieId);
+      final detailDTO = await movieRepository.getMovieDetail(movieId: movieId);
       if (detailDTO != null) {
         emit(state.copyWith(movieDetailDTO: detailDTO, status: MovieDetailStatus.success));
       } else {

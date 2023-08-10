@@ -25,4 +25,21 @@ class FluNetworkImage extends StatelessWidget {
       ),
     );
   }
+
+  static ImageProvider withImageProvider({
+    String? url,
+    double? height,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Widget Function()? onError,
+  }) {
+    const baseUrl = 'https://image.tmdb.org/t/p';
+    return BaseNetworkImage.withImageProvider(
+      url: '$baseUrl/original/$url',
+      height: height,
+      fit: fit,
+      alignment: alignment,
+      onError: onError,
+    );
+  }
 }

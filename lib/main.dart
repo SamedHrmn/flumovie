@@ -1,5 +1,4 @@
-import 'package:flumovie/core/api/api_client.dart';
-import 'package:flumovie/core/api/movie_api_helper.dart';
+import 'package:flumovie/core/api/dio_api_client.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/movie_detail_cubit.dart';
@@ -7,6 +6,8 @@ import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
 import 'package:flumovie/features/entry/onboard/onboard_view.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
+import 'package:flumovie/features/profile/application/profile_cubit.dart';
+import 'package:flumovie/features/profile/application/profile_dto.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_cubit.dart';
 import 'package:flumovie/shared/s_cubit/page_manager_cubit.dart';
 import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
@@ -34,31 +35,22 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => PopularMovieCubit(
-            dioMovieRepository: DioMovieRepository(
-              client: ApiClient(),
-              apiHelper: MovieApiHelper(
-                apiKey: dotenv.get('API_KEY'),
-              ),
+            movieRepository: DioMovieRepository(
+              client: DioApiClient(),
             ),
           ),
         ),
         BlocProvider(
           create: (context) => MovieDetailCubit(
-            dioMovieRepository: DioMovieRepository(
-              client: ApiClient(),
-              apiHelper: MovieApiHelper(
-                apiKey: dotenv.get('API_KEY'),
-              ),
+            movieRepository: DioMovieRepository(
+              client: DioApiClient(),
             ),
           ),
         ),
         BlocProvider(
           create: (context) => MovieSearchCubit(
-            dioMovieRepository: DioMovieRepository(
-              client: ApiClient(),
-              apiHelper: MovieApiHelper(
-                apiKey: dotenv.get('API_KEY'),
-              ),
+            movieRepository: DioMovieRepository(
+              client: DioApiClient(),
             ),
           ),
         ),
@@ -76,6 +68,9 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        BlocProvider(
+          create: (context) => ProfileCubit(profileDTO: const ProfileDTO()),
         ),
         BlocProvider(
           create: (context) => PageManagerCubit(),

@@ -1,21 +1,21 @@
 import 'dart:developer';
 
 import 'package:flumovie/features/search/application/cubit/movie_search_state.dart';
-import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
+import 'package:flumovie/shared/s_data/i_movie_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MovieSearchCubit extends Cubit<MovieSearchState> {
-  MovieSearchCubit({required this.dioMovieRepository})
+  MovieSearchCubit({required this.movieRepository})
       : super(const MovieSearchState(
           status: MovieSearchStatus.initial,
         ));
 
-  final DioMovieRepository dioMovieRepository;
+  final IMovieRepository movieRepository;
 
   Future<void> searchMovie({required String title}) async {
     try {
       emit(const MovieSearchState(status: MovieSearchStatus.loading));
-      final movieSearchDTO = await dioMovieRepository.searchMovie(title: title);
+      final movieSearchDTO = await movieRepository.searchMovie(title: title);
 
       if (movieSearchDTO == null) {
         emit(state.copyWith(status: MovieSearchStatus.failure));

@@ -7,6 +7,8 @@ import 'package:flumovie/core/constants/color_constant.dart';
 import 'package:flumovie/features/entry/flu_bottombar_view.dart';
 import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
+import 'package:flumovie/features/profile/application/profile_cubit.dart';
+import 'package:flumovie/shared/s_cubit/page_manager_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,26 +22,20 @@ class OnboardView extends StatefulWidget {
 class _OnboardViewState extends State<OnboardView> {
   @override
   Widget build(BuildContext context) {
-    final viewData = context.watch<OnBoardCubit>().state;
+    final viewData = context.watch<PageManagerCubit>().state;
 
     return FlumovieScaffold(
       onWillPop: () async {
-        if (viewData.isSecondPageActive) {}
+        if (viewData.onboardIsSecondPageActive) {}
         return false;
       },
-      child: viewData.isSecondPageActive
-          ? const _ProfileAvatarPage()
-          : _NickNamePage(
-              viewData: viewData,
-            ),
+      child: viewData.onboardIsSecondPageActive ? const _ProfileAvatarPage() : const _NickNamePage(),
     );
   }
 }
 
 class _NickNamePage extends StatelessWidget {
-  const _NickNamePage({required this.viewData});
-
-  final OnboardDTO viewData;
+  const _NickNamePage();
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +58,18 @@ class _NickNamePage extends StatelessWidget {
             ),
           ),
         ),
-        FluPrimaryButton(
-          backgroundColor: viewData.nickName.isEmpty ? null : ColorConstant.primaryButtonColor,
-          onPressed: viewData.nickName.isEmpty
-              ? null
-              : () {
-                  onboardCubit.updateCurrentPage(true);
-                },
-          child: FluText(
-            text: 'Continue',
-            color: viewData.nickName.isEmpty ? ColorConstant.textBlack : ColorConstant.textWhite,
+        BlocBuilder<OnBoardCubit, OnboardDTO>(
+          builder: (context, state) => FluPrimaryButton(
+            backgroundColor: state.nickName.isEmpty ? null : ColorConstant.primaryButtonColor,
+            onPressed: state.nickName.isEmpty
+                ? null
+                : () {
+                    context.read<PageManagerCubit>().updateOnboardSecondPage(true);
+                  },
+            child: FluText(
+              text: 'Continue',
+              color: state.nickName.isEmpty ? ColorConstant.textBlack : ColorConstant.textWhite,
+            ),
           ),
         ),
         const Spacer(flex: 2),
@@ -122,6 +120,7 @@ class _ProfileAvatarPageState extends State<_ProfileAvatarPage> {
           onPressed: viewData.avatarPath.isEmpty
               ? null
               : () {
+                  context.read<ProfileCubit>().saveOnboardData(onboardDTO: viewData);
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute<void>(
                         builder: (context) => const FluBottomBarView(),

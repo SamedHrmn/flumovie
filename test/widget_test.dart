@@ -7,8 +7,8 @@
 
 import 'dart:developer';
 
-import 'package:flumovie/core/api/api_client.dart';
-import 'package:flumovie/core/api/movie_api_helper.dart';
+import 'package:flumovie/core/api/dio_api_client.dart';
+import 'package:flumovie/core/api/movie_api_uri.dart';
 import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
@@ -26,23 +26,22 @@ import 'package:flutter_test/flutter_test.dart';
 class MockMovieRepository implements IMovieRepository {
   MockMovieRepository({
     required this.apiClient,
-    required this.apiHelper,
   });
-  final ApiClient apiClient;
-  final MovieApiHelper apiHelper;
+  final IApiClient apiClient;
 
   @override
   Future<MovieDetailDTO?> getMovieDetail({required int movieId}) async {
     try {
-      final movieResponse = await apiClient.dio.getUri<Map<String, dynamic>>(
-        apiHelper.movie(movieId: movieId),
+      final movieResponse = await apiClient.fetch<Map<String, dynamic>>(
+        apiUri: MovieApiUri.movie,
+        param: movieId.toString(),
       );
 
-      expect(movieResponse.data, isNotNull, reason: 'Movie response data is null');
-      log(movieResponse.data!.toString(), name: 'Movie data');
+      expect(movieResponse, isNotEmpty, reason: 'Movie response data is empty');
+      log(movieResponse.toString(), name: 'Movie data');
 
       return MovieDetailDTO(
-        movieDetail: MovieDetail.fromJson(movieResponse.data!),
+        movieDetail: MovieDetail.fromJson(movieResponse),
       );
     } catch (e) {
       return null;
@@ -52,14 +51,15 @@ class MockMovieRepository implements IMovieRepository {
   @override
   Future<PopularMovieDTO?> getPopularMovies({int page = 1, int limit = 8}) async {
     try {
-      final popularMovieResponse = await apiClient.dio.getUri<Map<String, dynamic>>(
-        apiHelper.popularMovie(page: page),
+      final popularMovieResponse = await apiClient.fetch<Map<String, dynamic>>(
+        apiUri: MovieApiUri.popularMovie,
+        param: page.toString(),
       );
 
-      expect(popularMovieResponse.data, isNotNull);
-      log(popularMovieResponse.data!.toString(), name: 'Popular movie data');
+      expect(popularMovieResponse, isNotEmpty);
+      log(popularMovieResponse.toString(), name: 'Popular movie data');
 
-      return PopularMovieDTO.fromDomain(PopularMovie.fromJson(popularMovieResponse.data!));
+      return PopularMovieDTO.fromDomain(PopularMovie.fromJson(popularMovieResponse));
     } catch (e) {
       return null;
     }
@@ -68,13 +68,16 @@ class MockMovieRepository implements IMovieRepository {
   @override
   Future<MovieSearchDTO?> searchMovie({required String title}) async {
     try {
-      final searchResponse = await apiClient.dio.getUri<Map<String, dynamic>>(apiHelper.searchMovie(query: title));
+      final searchResponse = await apiClient.fetch<Map<String, dynamic>>(
+        apiUri: MovieApiUri.searchMovie,
+        param: title,
+      );
 
-      expect(searchResponse.data, isNotNull);
-      log(searchResponse.data!.toString(), name: 'Search movie data for $title');
+      expect(searchResponse, isNotNull);
+      log(searchResponse.toString(), name: 'Search movie data for $title');
 
       return MovieSearchDTO.fromDomain(
-        MovieSearch.fromJson(searchResponse.data!),
+        MovieSearch.fromJson(searchResponse),
       );
     } catch (e) {
       return null;
@@ -85,20 +88,16 @@ class MockMovieRepository implements IMovieRepository {
 void main() async {
   await dotenv.load();
 
-  final apiHelper = MovieApiHelper(apiKey: dotenv.get('API_KEY'));
-
   test('Movie Test', () async {
     final mockMovieRepository = MockMovieRepository(
-      apiClient: ApiClient(),
-      apiHelper: apiHelper,
+      apiClient: DioApiClient(),
     );
     await mockMovieRepository.getMovieDetail(movieId: 624860);
   });
 
   test('Popular Movie Test', () async {
     final mockMovieRepository = MockMovieRepository(
-      apiClient: ApiClient(),
-      apiHelper: apiHelper,
+      apiClient: DioApiClient(),
     );
     final popularMovieDTO = await mockMovieRepository.getPopularMovies();
     expect(popularMovieDTO, isNotNull);
@@ -106,8 +105,7 @@ void main() async {
 
   test('Search Movie Test For Success', () async {
     final mockMovieRepository = MockMovieRepository(
-      apiClient: ApiClient(),
-      apiHelper: apiHelper,
+      apiClient: DioApiClient(),
     );
     final searchMovieDTO = await mockMovieRepository.searchMovie(title: 'Lord of the Rings: Two Towers');
     expect(searchMovieDTO!.movieSearch!.totalResults, greaterThan(0));
@@ -115,8 +113,7 @@ void main() async {
 
   test('Search Movie Test For Not Found', () async {
     final mockMovieRepository = MockMovieRepository(
-      apiClient: ApiClient(),
-      apiHelper: apiHelper,
+      apiClient: DioApiClient(),
     );
     final searchMovieDTO = await mockMovieRepository.searchMovie(title: '');
     expect(searchMovieDTO!.movieSearch!.totalResults, equals(0));

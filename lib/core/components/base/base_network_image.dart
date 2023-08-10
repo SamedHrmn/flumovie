@@ -19,4 +19,20 @@ class BaseNetworkImage extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) => onError?.call() ?? const SizedBox(),
     );
   }
+
+  static ImageProvider withImageProvider({
+    String? url,
+    double? height,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    Widget Function()? onError,
+  }) {
+    return Image.network(
+      url ?? '-',
+      height: height,
+      fit: fit,
+      alignment: alignment,
+      errorBuilder: (context, error, stackTrace) => onError?.call() ?? const SizedBox(),
+    ).image;
+  }
 }

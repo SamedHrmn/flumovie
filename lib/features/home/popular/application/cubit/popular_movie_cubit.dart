@@ -1,18 +1,18 @@
 import 'dart:developer';
 
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_state.dart';
-import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
+import 'package:flumovie/shared/s_data/i_movie_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
   PopularMovieCubit({
-    required this.dioMovieRepository,
+    required this.movieRepository,
     this.clearCache = false,
   }) : super(const PopularMovieState(status: PopularMovieStatus.initial)) {
     getPopularMovies();
   }
 
-  final DioMovieRepository dioMovieRepository;
+  final IMovieRepository movieRepository;
   final bool clearCache;
 
   Future<void> getPopularMovies() async {
@@ -29,7 +29,7 @@ class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
         return;
       }
 
-      final movieDTO = await dioMovieRepository.getPopularMovies();
+      final movieDTO = await movieRepository.getPopularMovies();
       if (movieDTO == null) {
         emit(state.copyWith(status: PopularMovieStatus.failure));
 
