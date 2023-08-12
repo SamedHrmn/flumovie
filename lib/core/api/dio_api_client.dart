@@ -1,11 +1,6 @@
-// ignore_for_file: one_member_abstracts
-
 import 'package:dio/dio.dart';
+import 'package:flumovie/core/api/i_api_client.dart';
 import 'package:flumovie/core/api/movie_api_uri.dart';
-
-abstract interface class IApiClient {
-  Future<T> fetch<T>({required MovieApiUri apiUri, required String param});
-}
 
 final class DioApiClient implements IApiClient {
   factory DioApiClient() {

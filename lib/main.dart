@@ -1,16 +1,17 @@
 import 'package:flumovie/core/api/dio_api_client.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
+import 'package:flumovie/core/util/navigation/navigation_manager.dart';
+import 'package:flumovie/core/util/navigation/navigation_observer.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/movie_detail_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
-import 'package:flumovie/features/entry/onboard/onboard_view.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
 import 'package:flumovie/features/profile/application/profile_cubit.dart';
 import 'package:flumovie/features/profile/application/profile_dto.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_cubit.dart';
 import 'package:flumovie/shared/s_cubit/page_manager_cubit.dart';
-import 'package:flumovie/shared/s_data/dio_movie_repository.dart';
+import 'package:flumovie/shared/s_data/movie_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,21 +36,21 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => PopularMovieCubit(
-            movieRepository: DioMovieRepository(
+            movieRepository: MovieRepository(
               client: DioApiClient(),
             ),
           ),
         ),
         BlocProvider(
           create: (context) => MovieDetailCubit(
-            movieRepository: DioMovieRepository(
+            movieRepository: MovieRepository(
               client: DioApiClient(),
             ),
           ),
         ),
         BlocProvider(
           create: (context) => MovieSearchCubit(
-            movieRepository: DioMovieRepository(
+            movieRepository: MovieRepository(
               client: DioApiClient(),
             ),
           ),
@@ -79,7 +80,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
-        home: const OnboardView(),
+        navigatorKey: NavigationManager.navigatorKey,
+        navigatorObservers: [
+          FluNavigationObserver(),
+        ],
+        home: FluNavigations.onboardView.toPage(),
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:flumovie/core/components/custom/flu_primary_button.dart';
 import 'package:flumovie/core/components/custom/flumovie_scaffold.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/constants/color_constant.dart';
-import 'package:flumovie/features/entry/flu_bottombar_view.dart';
+import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
 import 'package:flumovie/features/profile/application/profile_cubit.dart';
@@ -121,11 +121,7 @@ class _ProfileAvatarPageState extends State<_ProfileAvatarPage> {
               ? null
               : () {
                   context.read<ProfileCubit>().saveOnboardData(onboardDTO: viewData);
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute<void>(
-                        builder: (context) => const FluBottomBarView(),
-                      ),
-                      (route) => false);
+                  NavigationManager.instance.goClearBackAll(context, des: FluNavigations.bottomBarView);
                 },
           child: FluText(
             text: 'Continue',

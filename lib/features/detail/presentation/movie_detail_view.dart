@@ -5,6 +5,7 @@ import 'package:flumovie/core/components/custom/flumovie_scaffold.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/constants/color_constant.dart';
 import 'package:flumovie/core/util/datetime_ext.dart';
+import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/favorites_state.dart';
 import 'package:flumovie/features/detail/application/cubit/movie_detail_cubit.dart';
@@ -184,7 +185,7 @@ class _MovieDetailViewState extends State<MovieDetailView> {
               top: 32,
               left: 16,
               child: FluIconButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => NavigationManager.instance.pop(context),
                 icon: FluIcon.back,
               ),
             ),

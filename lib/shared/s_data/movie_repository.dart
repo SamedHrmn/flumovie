@@ -1,16 +1,15 @@
-import 'package:flumovie/core/api/dio_api_client.dart';
+import 'package:flumovie/core/api/i_api_client.dart';
 import 'package:flumovie/core/api/movie_api_uri.dart';
 import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
+import 'package:flumovie/features/home/popular/domain/popular_movie.dart';
 import 'package:flumovie/features/search/application/movie_search_dto.dart';
 import 'package:flumovie/features/search/domain/movie_search.dart';
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
 
-import '../../features/home/popular/domain/popular_movie.dart';
-
-class DioMovieRepository implements IMovieRepository {
-  DioMovieRepository({required this.client});
+class MovieRepository implements IMovieRepository {
+  MovieRepository({required this.client});
 
   final IApiClient client;
 

@@ -2,7 +2,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/constants/color_constant.dart';
-import 'package:flumovie/features/detail/presentation/movie_detail_view.dart';
+import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_state.dart';
 import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
@@ -142,10 +142,9 @@ class _PopularMovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (context) => MovieDetailView(movieId: popularMovieDetail.id),
-        ),
+      onTap: () => NavigationManager.instance.go(
+        des: FluNavigations.movieDetailView,
+        param: popularMovieDetail.id,
       ),
       child: SizedBox(
         child: FluNetworkImage(

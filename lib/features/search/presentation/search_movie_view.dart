@@ -1,7 +1,7 @@
 import 'package:flumovie/core/components/custom/flu_icon_button.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
-import 'package:flumovie/features/detail/presentation/movie_detail_view.dart';
+import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_cubit.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_state.dart';
 import 'package:flutter/material.dart';
@@ -104,10 +104,9 @@ class _SearchMovieResults extends StatelessWidget {
                 final model = state.movieSearchDTO!.movieSearch!.results![index];
 
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (context) => MovieDetailView(movieId: model.id),
-                    ),
+                  onTap: () => NavigationManager.instance.go(
+                    des: FluNavigations.movieDetailView,
+                    param: model.id,
                   ),
                   child: SizedBox(
                     width: 100,

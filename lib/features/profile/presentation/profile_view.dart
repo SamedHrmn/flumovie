@@ -1,9 +1,9 @@
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
+import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/favorites_state.dart';
-import 'package:flumovie/features/detail/presentation/movie_detail_view.dart';
 import 'package:flumovie/features/profile/application/profile_cubit.dart';
 import 'package:flumovie/features/profile/application/profile_dto.dart';
 import 'package:flutter/material.dart';
@@ -72,10 +72,9 @@ class _ProfileViewState extends State<ProfileView> {
                       scrollDirection: Axis.horizontal,
                       itemCount: movies.length,
                       itemBuilder: (context, index) => GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (context) => MovieDetailView(movieId: movies[index].id),
-                          ),
+                        onTap: () => NavigationManager.instance.go(
+                          des: FluNavigations.movieDetailView,
+                          param: movies[index].id,
                         ),
                         child: SizedBox(
                           width: 100,

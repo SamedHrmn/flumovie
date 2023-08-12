@@ -8,6 +8,7 @@
 import 'dart:developer';
 
 import 'package:flumovie/core/api/dio_api_client.dart';
+import 'package:flumovie/core/api/i_api_client.dart';
 import 'package:flumovie/core/api/movie_api_uri.dart';
 import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
