@@ -8,12 +8,24 @@ part of 'movie_search_dto.dart';
 
 MovieSearchDTO _$MovieSearchDTOFromJson(Map<String, dynamic> json) =>
     MovieSearchDTO(
-      movieSearch: json['movieSearch'] == null
-          ? null
-          : MovieSearch.fromJson(json['movieSearch'] as Map<String, dynamic>),
+      movieSearchDetails: (json['movieSearchDetails'] as List<dynamic>)
+          .map((e) => MovieSearchDetail.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$MovieSearchDTOToJson(MovieSearchDTO instance) =>
     <String, dynamic>{
-      'movieSearch': instance.movieSearch,
+      'movieSearchDetails': instance.movieSearchDetails,
+    };
+
+MovieSearchDetail _$MovieSearchDetailFromJson(Map<String, dynamic> json) =>
+    MovieSearchDetail(
+      id: json['id'] as int?,
+      posterPath: json['posterPath'] as String?,
+    );
+
+Map<String, dynamic> _$MovieSearchDetailToJson(MovieSearchDetail instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'posterPath': instance.posterPath,
     };

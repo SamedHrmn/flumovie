@@ -14,6 +14,8 @@ import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
 import 'package:flumovie/features/home/popular/domain/popular_movie.dart';
+import 'package:flumovie/features/home/upcoming/application/upcoming_movies_dto.dart';
+import 'package:flumovie/features/home/upcoming/domain/upcoming_movies.dart';
 
 import 'package:flumovie/features/search/application/movie_search_dto.dart';
 import 'package:flumovie/features/search/domain/movie_search.dart';
@@ -84,6 +86,23 @@ class MockMovieRepository implements IMovieRepository {
       return null;
     }
   }
+
+  @override
+  Future<UpcomingMoviesDTO?> upcomingMovies({int limit = 8}) async {
+    try {
+      final upcomingResponse = await apiClient.fetch<Map<String, dynamic>>(apiUri: MovieApiUri.upcomingMovie);
+
+      expect(upcomingResponse, isNotEmpty);
+      log(upcomingResponse.toString(), name: 'Upcoming movie data');
+
+      return UpcomingMoviesDTO.fromDomain(
+        upcomingMovies: UpcomingMovies.fromJson(upcomingResponse),
+        limit: limit,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
 }
 
 void main() async {
@@ -109,7 +128,7 @@ void main() async {
       apiClient: DioApiClient(),
     );
     final searchMovieDTO = await mockMovieRepository.searchMovie(title: 'Lord of the Rings: Two Towers');
-    expect(searchMovieDTO!.movieSearch!.totalResults, greaterThan(0));
+    expect(searchMovieDTO!.movieSearchDetails, isNotEmpty);
   });
 
   test('Search Movie Test For Not Found', () async {
@@ -117,6 +136,14 @@ void main() async {
       apiClient: DioApiClient(),
     );
     final searchMovieDTO = await mockMovieRepository.searchMovie(title: '');
-    expect(searchMovieDTO!.movieSearch!.totalResults, equals(0));
+    expect(searchMovieDTO!.movieSearchDetails, isEmpty);
+  });
+
+  test('Upcoming Movie Test', () async {
+    final mockMovieRepository = MockMovieRepository(
+      apiClient: DioApiClient(),
+    );
+    final upcomingMoviesDTO = await mockMovieRepository.upcomingMovies();
+    expect(upcomingMoviesDTO!.upcomingMovies, isNotEmpty);
   });
 }

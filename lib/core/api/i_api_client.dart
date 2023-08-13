@@ -3,5 +3,5 @@
 import 'package:flumovie/core/api/movie_api_uri.dart';
 
 abstract interface class IApiClient {
-  Future<T> fetch<T>({required MovieApiUri apiUri, required String param});
+  Future<T> fetch<T>({required MovieApiUri apiUri, String? param});
 }

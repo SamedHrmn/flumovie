@@ -16,12 +16,12 @@ class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
   final bool clearCache;
 
   Future<void> getPopularMovies() async {
-    if (clearCache) {
-      await HydratedBloc.storage.clear();
-      await HydratedBloc.storage.close();
-    }
-
     try {
+      if (clearCache) {
+        await HydratedBloc.storage.clear();
+        await HydratedBloc.storage.close();
+      }
+
       emit(state.copyWith(status: PopularMovieStatus.loading));
 
       if (state.popularMovieDTO != null) {

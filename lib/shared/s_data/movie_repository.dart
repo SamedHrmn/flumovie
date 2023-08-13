@@ -4,6 +4,8 @@ import 'package:flumovie/features/detail/application/movie_detail_dto.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
 import 'package:flumovie/features/home/popular/domain/popular_movie.dart';
+import 'package:flumovie/features/home/upcoming/application/upcoming_movies_dto.dart';
+import 'package:flumovie/features/home/upcoming/domain/upcoming_movies.dart';
 import 'package:flumovie/features/search/application/movie_search_dto.dart';
 import 'package:flumovie/features/search/domain/movie_search.dart';
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
@@ -61,6 +63,25 @@ class MovieRepository implements IMovieRepository {
 
       return MovieSearchDTO.fromDomain(
         MovieSearch.fromJson(searchResponse),
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<UpcomingMoviesDTO?> upcomingMovies({int limit = 8}) async {
+    try {
+      final upcomingResponse = await client.fetch<Map<String, dynamic>>(
+        apiUri: MovieApiUri.upcomingMovie,
+      );
+      if (upcomingResponse.isEmpty) {
+        return null;
+      }
+
+      return UpcomingMoviesDTO.fromDomain(
+        upcomingMovies: UpcomingMovies.fromJson(upcomingResponse),
+        limit: limit,
       );
     } catch (e) {
       return null;

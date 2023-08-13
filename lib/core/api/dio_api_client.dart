@@ -14,7 +14,7 @@ final class DioApiClient implements IApiClient {
   late final Dio _dio = Dio();
 
   @override
-  Future<T> fetch<T>({required MovieApiUri apiUri, required String param}) async {
+  Future<T> fetch<T>({required MovieApiUri apiUri, String? param}) async {
     final response = await _dio.getUri<T>(apiUri.toUri(param));
     return response.data as T;
   }

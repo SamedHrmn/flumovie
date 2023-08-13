@@ -1,4 +1,4 @@
-part of '../movie_home_view.dart';
+part of 'presentation/popular_movie_slider.dart';
 
 class _PopularMovieSliderData {
   const _PopularMovieSliderData(this.imageUrlColors, this.activeIndex);
@@ -23,7 +23,7 @@ class _PopularMovieSliderNotifier extends ValueNotifier<_PopularMovieSliderData>
   Future<void> computeImageColors(List<PopularMovieDetail> popularMovies) async {
     final localMap = <String?, Color>{};
 
-    for (var movie in popularMovies) {
+    for (final movie in popularMovies) {
       if (!value.imageUrlColors.containsKey(movie.imageUrl)) {
         final paletteGenerator = await PaletteGenerator.fromImageProvider(
           FluNetworkImage.withImageProvider(url: movie.imageUrl),

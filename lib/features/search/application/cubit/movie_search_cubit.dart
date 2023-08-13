@@ -20,7 +20,7 @@ class MovieSearchCubit extends Cubit<MovieSearchState> {
       if (movieSearchDTO == null) {
         emit(state.copyWith(status: MovieSearchStatus.failure));
         return;
-      } else if (movieSearchDTO.movieSearch?.totalResults == 0) {
+      } else if (movieSearchDTO.movieSearchDetails.isEmpty) {
         emit(state.copyWith(status: MovieSearchStatus.noResult, queryString: title));
         return;
       }

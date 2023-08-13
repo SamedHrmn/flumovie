@@ -7,6 +7,7 @@ import 'package:flumovie/features/detail/application/cubit/movie_detail_cubit.da
 import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
+import 'package:flumovie/features/home/upcoming/application/cubit/upcoming_movies_cubit.dart';
 import 'package:flumovie/features/profile/application/profile_cubit.dart';
 import 'package:flumovie/features/profile/application/profile_dto.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_cubit.dart';
@@ -72,6 +73,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ProfileCubit(profileDTO: const ProfileDTO()),
+        ),
+        BlocProvider(
+          create: (context) => UpcomingMoviesCubit(
+            movieRepository: MovieRepository(
+              client: DioApiClient(),
+            ),
+          ),
         ),
         BlocProvider(
           create: (context) => PageManagerCubit(),
