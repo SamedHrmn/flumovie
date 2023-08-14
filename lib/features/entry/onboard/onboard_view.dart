@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/components/custom/flu_circle_avatar.dart';
 import 'package:flumovie/core/components/custom/flu_primary_button.dart';
 import 'package:flumovie/core/components/custom/flumovie_scaffold.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/constants/color_constant.dart';
+import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/entry/onboard/onboard_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
@@ -44,8 +46,8 @@ class _NickNamePage extends StatelessWidget {
     return Column(
       children: [
         const Spacer(),
-        const FluText(
-          text: 'How can we call you?',
+        FluText(
+          text: LocalizationConstants.onboard_howCanWeCallYou.tr(),
           size: 16,
           weight: FluTextWeight.bold,
         ),
@@ -67,7 +69,7 @@ class _NickNamePage extends StatelessWidget {
                     context.read<PageManagerCubit>().updateOnboardSecondPage(true);
                   },
             child: FluText(
-              text: 'Continue',
+              text: LocalizationConstants.onboard_continue.tr(),
               color: state.nickName.isEmpty ? ColorConstant.textBlack : ColorConstant.textWhite,
             ),
           ),

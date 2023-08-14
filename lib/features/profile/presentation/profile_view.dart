@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
+import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
@@ -76,10 +78,10 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Padding yourFavoritesText() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: FluText(
-        text: 'Your Favorites',
+        text: LocalizationConstants.profile_yourFavorites.tr(),
         size: 16,
         weight: FluTextWeight.bold,
       ),
