@@ -47,6 +47,8 @@ class FluBottomBarView extends StatelessWidget {
   }
 }
 
+//*-----------------------------------------------------------------------------
+
 class _FluBottomBarButton extends StatelessWidget {
   const _FluBottomBarButton({required this.page, super.key});
 
@@ -66,7 +68,8 @@ class _FluBottomBarButton extends StatelessWidget {
           child: BlocSelector<PageManagerCubit, PageManagerData, int>(
             selector: (state) => state.fluBottomPageIndex,
             builder: (context, pageIndex) {
-              return ColoredBox(
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
                 color: pageIndex == page.index ? ColorConstant.primaryButtonColor : Colors.transparent,
               );
             },
@@ -76,6 +79,8 @@ class _FluBottomBarButton extends StatelessWidget {
     );
   }
 }
+
+//*-----------------------------------------------------------------------------
 
 class _PageView extends StatefulWidget {
   const _PageView();
@@ -96,8 +101,10 @@ class __PageViewState extends State<_PageView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     context.read<PageManagerCubit>().setController(controller);
+    if (context.read<PageManagerCubit>().state.fluBottomPageIndex != 0) {
+      context.read<PageManagerCubit>().updatePageIndex(0);
+    }
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/api/dio_api_client.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
+import 'package:flumovie/core/util/localization_manager.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/core/util/navigation/navigation_observer.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
@@ -23,13 +24,7 @@ import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.wait([
-    dotenv.load(),
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]),
-    EasyLocalization.ensureInitialized(),
-  ]);
-
-  HydratedBloc.storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
+  await initApp();
 
   runApp(
     EasyLocalization(
@@ -39,6 +34,16 @@ void main() async {
       child: const MyApp(),
     ),
   );
+}
+
+Future<void> initApp() async {
+  await Future.wait([
+    dotenv.load(),
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]),
+    LocalizationManager.instance.initLocalization(),
+  ]);
+
+  HydratedBloc.storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
 }
 
 class MyApp extends StatelessWidget {
@@ -101,9 +106,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
-        localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
+        localizationsDelegates: context.localizationDelegates,
         navigatorKey: NavigationManager.navigatorKey,
         navigatorObservers: [
           FluNavigationObserver(),

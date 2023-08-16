@@ -1,9 +1,33 @@
 {
     "onboard": {
         "howCanWeCallYou": "Sizi nasıl çağıralım?",
-        "continue": "Devam Et"
+        "continue": "Devam Et",
+        "chooseYourAvatar": "Avatar seç"
     },
     "profile": {
-        "yourFavorites": "Favorilerin"
+        "yourFavorites": "Favorilerin",
+        "languageSettings": "Dil Ayarları"
+    },
+    "favorite": {
+        "noFavoriteYet": "Henüz herhangi bir favori filmin yok",
+        "removeFavorite": "Favoriden Kaldır",
+        "addFavorite": "Favoriye Ekle"
+    },
+    "detail": {
+        "overview": "Genel Bakış"
+    },
+    "search": {
+        "resultFor": "Arama sonucu: {}",
+        "textFieldHint": "Film ara..",
+        "noResult": "Sonuç yok :("
+    },
+    "home": {
+        "upcomingMovies": "Gelecek Filmler"
+    },
+    "upcoming": {
+        "unknownReleaseDate": "Bilinmeyen çıkış tarihi"
+    },
+    "error": {
+        "type1": "Bir hata oluştu"
     }
 }

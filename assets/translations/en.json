@@ -1,9 +1,33 @@
 {
     "onboard": {
         "howCanWeCallYou": "How can we call you?",
-        "continue": "Continue"
+        "continue": "Continue",
+        "chooseYourAvatar": "Choose your avatar"
     },
     "profile": {
-        "yourFavorites": "Your Favorites"
+        "yourFavorites": "Your Favorites",
+        "languageSettings": "Language Settings"
+    },
+    "favorite": {
+        "noFavoriteYet": "You dont have any favorite movie yet",
+        "removeFavorite": "Remove Favorite",
+        "addFavorite": "Add Favorite"
+    },
+    "detail": {
+        "overview": "Overview"
+    },
+    "search": {
+        "resultFor": "Search result for: {}",
+        "textFieldHint": "Search movie..",
+        "noResult": "No result :("
+    },
+    "home": {
+        "upcomingMovies": "Upcoming Movies"
+    },
+    "upcoming": {
+        "unknownReleaseDate": "Unknown release date"
+    },
+    "error": {
+        "type1": "An error occured"
     }
 }

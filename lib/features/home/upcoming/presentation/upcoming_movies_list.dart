@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
+import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/core/util/datetime_ext.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/home/upcoming/application/upcoming_movies_dto.dart';
@@ -48,7 +50,9 @@ class UpcomingMoviesList extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  FluText(text: model.releaseDate?.parseDateTime(context) ?? 'Unknown release date'),
+                  FluText(
+                    text: model.releaseDate?.parseDateTime(context) ?? LocalizationConstants.upcoming_unknownReleaseDate.tr(),
+                  ),
                 ],
               ),
             ),

@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/components/custom/flu_icon_button.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/constants/color_constant.dart';
+import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/core/gen/fonts.gen.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/search/application/cubit/movie_search_cubit.dart';
@@ -9,6 +11,8 @@ import 'package:flumovie/features/search/application/cubit/movie_search_state.da
 import 'package:flumovie/features/search/application/movie_search_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+part '../widget/search_result_card.dart';
 
 class SearchMovieView extends StatefulWidget {
   const SearchMovieView({super.key});
@@ -63,10 +67,10 @@ class _SearchMovieViewState extends State<SearchMovieView> {
   }
 
   Widget searchResultText({required bool isSearchSuccess, required String? text}) {
-    return isSearchSuccess
+    return isSearchSuccess && text != null
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: FluText(text: 'Search result for: $text'),
+            child: FluText(text: LocalizationConstants.search_resultFor.tr(args: [text])),
           )
         : const SizedBox.shrink();
   }
@@ -89,19 +93,21 @@ class _SearchMovieViewState extends State<SearchMovieView> {
   TextField searchTextField() {
     return TextField(
       onChanged: updateSearchString,
-      decoration: const InputDecoration(
-        hintText: 'Search movie..',
-        hintStyle: TextStyle(
+      decoration: InputDecoration(
+        hintText: LocalizationConstants.search_textFieldHint.tr(),
+        hintStyle: const TextStyle(
           fontFamily: FontFamily.roboto,
           fontWeight: FontWeight.w400,
           color: ColorConstant.textBlack,
           fontSize: 14,
         ),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
   }
 }
+
+//*-----------------------------------------------------------------------------
 
 class _SearchMovieResults extends StatelessWidget {
   const _SearchMovieResults();
@@ -116,25 +122,18 @@ class _SearchMovieResults extends StatelessWidget {
           case MovieSearchStatus.loading:
             return const Center(child: CircularProgressIndicator());
           case MovieSearchStatus.noResult:
-            return const FluText(text: 'No result :(');
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: FluText(text: LocalizationConstants.search_noResult.tr()),
+            );
           case MovieSearchStatus.failure:
-            return const FluText(text: 'An Error Occured!');
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: FluText(text: LocalizationConstants.error_type1.tr()),
+            );
           case MovieSearchStatus.success:
-            return GridView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 220,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-              ),
-              itemCount: state.movieSearchDTO!.movieSearchDetails.length,
-              itemBuilder: (context, index) {
-                final model = state.movieSearchDTO!.movieSearchDetails[index];
-
-                return _SearchResultCard(movieSearchDetail: model);
-              },
+            return _SearchResultGrid(
+              movieSearchDTO: state.movieSearchDTO!,
             );
         }
       },
@@ -142,44 +141,30 @@ class _SearchMovieResults extends StatelessWidget {
   }
 }
 
-class _SearchResultCard extends StatelessWidget {
-  const _SearchResultCard({required this.movieSearchDetail});
+//*-----------------------------------------------------------------------------
 
-  final MovieSearchDetail movieSearchDetail;
+class _SearchResultGrid extends StatelessWidget {
+  const _SearchResultGrid({required this.movieSearchDTO});
+
+  final MovieSearchDTO movieSearchDTO;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => NavigationManager.instance.go(
-        des: FluNavigations.movieDetailView,
-        param: movieSearchDetail.id,
+    return GridView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 24),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisExtent: 220,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
       ),
-      child: SizedBox(
-        width: 100,
-        height: 220,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 16,
-                      spreadRadius: 1,
-                    )
-                  ],
-                ),
-                child: FluNetworkImage(
-                  url: movieSearchDetail.posterPath,
-                  fit: BoxFit.fill,
-                  radius: 12,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      itemCount: movieSearchDTO.movieSearchDetails.length,
+      itemBuilder: (context, index) {
+        final model = movieSearchDTO.movieSearchDetails[index];
+
+        return _SearchResultCard(movieSearchDetail: model);
+      },
     );
   }
 }

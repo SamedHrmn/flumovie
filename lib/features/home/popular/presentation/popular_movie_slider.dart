@@ -18,7 +18,7 @@ class PopularMovieSlider extends StatefulWidget {
 }
 
 class _PopularMovieSliderState extends State<PopularMovieSlider> {
-  final _PopularMovieSliderNotifier popularMovieSliderNotifier = _PopularMovieSliderNotifier();
+  final popularMovieSliderNotifier = _PopularMovieSliderNotifier();
 
   @override
   void initState() {
@@ -36,68 +36,82 @@ class _PopularMovieSliderState extends State<PopularMovieSlider> {
             height: 425,
           ),
           Positioned.fill(
-            child: ValueListenableBuilder(
-              valueListenable: popularMovieSliderNotifier,
-              builder: (context, __, _) {
-                return Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        popularMovieSliderNotifier.getBackgroundColorFromImage(widget.popularMovies),
-                        Colors.white,
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+            child: generatedBackgroundGradient(),
           ),
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
-            child: ValueListenableBuilder(
-              valueListenable: popularMovieSliderNotifier,
-              builder: (context, __, _) {
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  height: 24,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: popularMovieSliderNotifier.getBackgroundColorFromImage(widget.popularMovies),
-                        blurRadius: 10,
-                        spreadRadius: 10,
-                        offset: const Offset(0, 16),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            child: generatedBackgroundShadow(),
           ),
-          CarouselSlider.builder(
-            itemCount: widget.popularMovies.length,
-            itemBuilder: (context, index, realIndex) => _PopularMovieCard(
-              popularMovieDetail: widget.popularMovies[index],
-            ),
-            options: CarouselOptions(
-              height: 415,
-              onPageChanged: (index, reason) => popularMovieSliderNotifier.updateIndex(index),
-              enlargeStrategy: CenterPageEnlargeStrategy.zoom,
-              viewportFraction: 0.77,
-              disableCenter: true,
-              enlargeCenterPage: true,
-            ),
-          )
+          popularMoviesSlider()
         ],
       ),
     );
   }
+
+  CarouselSlider popularMoviesSlider() {
+    return CarouselSlider.builder(
+      itemCount: widget.popularMovies.length,
+      itemBuilder: (context, index, realIndex) => _PopularMovieCard(
+        popularMovieDetail: widget.popularMovies[index],
+      ),
+      options: CarouselOptions(
+        height: 415,
+        onPageChanged: (index, reason) => popularMovieSliderNotifier.updateIndex(index),
+        enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+        viewportFraction: 0.77,
+        disableCenter: true,
+        enlargeCenterPage: true,
+      ),
+    );
+  }
+
+  ValueListenableBuilder<_PopularMovieSliderData> generatedBackgroundShadow() {
+    return ValueListenableBuilder(
+      valueListenable: popularMovieSliderNotifier,
+      builder: (context, __, _) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          height: 24,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: popularMovieSliderNotifier.getBackgroundColorFromImage(widget.popularMovies),
+                blurRadius: 10,
+                spreadRadius: 10,
+                offset: const Offset(0, 16),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  ValueListenableBuilder<_PopularMovieSliderData> generatedBackgroundGradient() {
+    return ValueListenableBuilder(
+      valueListenable: popularMovieSliderNotifier,
+      builder: (context, __, _) {
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [
+                popularMovieSliderNotifier.getBackgroundColorFromImage(widget.popularMovies),
+                Colors.white,
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
+
+//*-----------------------------------------------------------------------------
 
 class _PopularMovieCard extends StatelessWidget {
   const _PopularMovieCard({

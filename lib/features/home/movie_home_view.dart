@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
+import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_state.dart';
 import 'package:flumovie/features/home/popular/presentation/popular_movie_slider.dart';
@@ -15,9 +17,13 @@ class MovieHomeView extends StatefulWidget {
   State<MovieHomeView> createState() => _MovieHomeViewState();
 }
 
-class _MovieHomeViewState extends State<MovieHomeView> {
+class _MovieHomeViewState extends State<MovieHomeView> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -33,9 +39,9 @@ class _MovieHomeViewState extends State<MovieHomeView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: FluText(text: 'Upcoming Movies', size: 20, weight: FluTextWeight.bold),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: FluText(text: LocalizationConstants.home_upcomingMovies.tr(), size: 20, weight: FluTextWeight.bold),
         ),
         BlocBuilder<UpcomingMoviesCubit, UpcomingMoviesState>(
           builder: (context, state) {
@@ -44,7 +50,7 @@ class _MovieHomeViewState extends State<MovieHomeView> {
               case UpcomingMoviesStatus.initial:
                 return const CircularProgressIndicator.adaptive();
               case UpcomingMoviesStatus.failure:
-                return const Text('An error occured');
+                return FluText(text: LocalizationConstants.error_type1.tr());
               case UpcomingMoviesStatus.success:
                 final upcomingMovies = state.upcomingMoviesDTO!.upcomingMovies;
 
@@ -64,7 +70,7 @@ class _MovieHomeViewState extends State<MovieHomeView> {
           case PopularMovieStatus.initial:
             return const CircularProgressIndicator.adaptive();
           case PopularMovieStatus.failure:
-            return const Text('An error occured');
+            return FluText(text: LocalizationConstants.error_type1.tr());
           case PopularMovieStatus.success:
             final popularMovies = state.popularMovieDTO!.popularMovies!;
 
