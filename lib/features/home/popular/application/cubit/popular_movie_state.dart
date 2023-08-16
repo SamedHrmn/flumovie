@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flumovie/features/home/popular/application/popular_movie_dto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -15,6 +13,8 @@ class PopularMovieState {
     required this.status,
     this.popularMovieDTO,
   });
+
+  factory PopularMovieState.fromJson(Map<String, dynamic> json) => _$PopularMovieStateFromJson(json);
 
   final PopularMovieStatus status;
   final PopularMovieDTO? popularMovieDTO;
@@ -38,8 +38,6 @@ class PopularMovieState {
 
   @override
   int get hashCode => status.hashCode ^ popularMovieDTO.hashCode;
-
-  factory PopularMovieState.fromJson(Map<String, dynamic> json) => _$PopularMovieStateFromJson(json);
 
   Map<String, dynamic> toJson() => _$PopularMovieStateToJson(this);
 }

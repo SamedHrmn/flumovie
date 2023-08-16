@@ -1,7 +1,7 @@
+import 'package:flumovie/core/util/flu_cubit.dart';
 import 'package:flumovie/features/entry/onboard/onboard_dto.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class OnBoardCubit extends HydratedCubit<OnboardDTO> {
+class OnBoardCubit extends FluCubit<OnboardDTO> {
   OnBoardCubit({required OnboardDTO viewData}) : super(viewData);
 
   void updateNickName(String v) {

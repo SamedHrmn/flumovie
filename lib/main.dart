@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/api/dio_api_client.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
+import 'package:flumovie/core/util/flu_cubit.dart';
 import 'package:flumovie/core/util/localization_manager.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/core/util/navigation/navigation_observer.dart';
@@ -19,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
@@ -43,7 +43,7 @@ Future<void> initApp() async {
     LocalizationManager.instance.initLocalization(),
   ]);
 
-  HydratedBloc.storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
+  await FluCubit.init(dir: await getApplicationDocumentsDirectory());
 }
 
 class MyApp extends StatelessWidget {

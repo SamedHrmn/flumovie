@@ -1,9 +1,9 @@
 import 'dart:developer';
+import 'package:flumovie/core/util/flu_cubit.dart';
 import 'package:flumovie/features/home/upcoming/application/cubit/upcoming_movies_state.dart';
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class UpcomingMoviesCubit extends HydratedCubit<UpcomingMoviesState> {
+class UpcomingMoviesCubit extends FluCubit<UpcomingMoviesState> {
   UpcomingMoviesCubit({required this.movieRepository, this.clearCache = false}) : super(UpcomingMoviesState(status: UpcomingMoviesStatus.initial)) {
     getUpcomingMovies();
   }
@@ -14,8 +14,7 @@ class UpcomingMoviesCubit extends HydratedCubit<UpcomingMoviesState> {
   Future<void> getUpcomingMovies() async {
     try {
       if (clearCache) {
-        await HydratedBloc.storage.clear();
-        await HydratedBloc.storage.close();
+        await FluCubit.clearCache();
       }
 
       if (state.upcomingMoviesDTO != null) return;

@@ -12,21 +12,22 @@ enum FluIcon {
 
   const FluIcon(this.size);
 
-  Widget toWidget() {
+  Widget toWidget({Color? color}) {
     switch (this) {
       case FluIcon.back:
-        return _icon(Icons.arrow_back_ios_new_outlined);
+        return _icon(Icons.arrow_back_ios_new_outlined, color);
       case FluIcon.home:
-        return _icon(Icons.home_outlined);
+        return _icon(Icons.home_outlined, color);
       case FluIcon.search:
-        return _icon(Icons.search_outlined);
+        return _icon(Icons.search_outlined, color);
       case FluIcon.profile:
-        return _icon(Icons.person_2_outlined);
+        return _icon(Icons.person_2_outlined, color);
     }
   }
 
-  Widget _icon(IconData iconData) => Icon(
+  Widget _icon(IconData iconData, Color? color) => Icon(
         iconData,
+        color: color,
       );
 }
 

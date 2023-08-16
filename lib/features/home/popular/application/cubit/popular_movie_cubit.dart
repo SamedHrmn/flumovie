@@ -1,10 +1,9 @@
 import 'dart:developer';
-
+import 'package:flumovie/core/util/flu_cubit.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_state.dart';
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
+class PopularMovieCubit extends FluCubit<PopularMovieState> {
   PopularMovieCubit({
     required this.movieRepository,
     this.clearCache = false,
@@ -18,8 +17,7 @@ class PopularMovieCubit extends HydratedCubit<PopularMovieState> {
   Future<void> getPopularMovies() async {
     try {
       if (clearCache) {
-        await HydratedBloc.storage.clear();
-        await HydratedBloc.storage.close();
+        await FluCubit.clearCache();
       }
 
       emit(state.copyWith(status: PopularMovieStatus.loading));

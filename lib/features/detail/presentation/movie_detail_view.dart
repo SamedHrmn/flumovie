@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flumovie/core/components/custom/flu_circular_icon_button.dart';
 import 'package:flumovie/core/components/custom/flu_icon_button.dart';
 import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flu_primary_button.dart';
@@ -53,10 +54,12 @@ class _MovieDetailViewState extends State<MovieDetailView> {
     );
   }
 
-  FluIconButton backButton() {
-    return FluIconButton(
+  FluCircularIconButton backButton() {
+    return FluCircularIconButton(
       onPressed: () => NavigationManager.instance.pop(context),
       icon: FluIcon.back,
+      backgroundColor: ColorConstant.primaryButtonColor,
+      iconColor: Colors.white,
     );
   }
 
@@ -228,7 +231,7 @@ class _DetailBody extends StatelessWidget {
     );
   }
 
-  FluNetworkImage posterImage(MovieDetailDTO model, double screenH) {
+  Widget posterImage(MovieDetailDTO model, double screenH) {
     return FluNetworkImage(
       url: model.movieDetail?.posterPath,
       height: screenH * 0.72,

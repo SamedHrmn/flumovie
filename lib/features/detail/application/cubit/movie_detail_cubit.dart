@@ -1,10 +1,10 @@
 import 'dart:developer';
 
+import 'package:flumovie/core/util/flu_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/movie_detail_state.dart';
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class MovieDetailCubit extends HydratedCubit<MovieDetailState> {
+class MovieDetailCubit extends FluCubit<MovieDetailState> {
   MovieDetailCubit({required this.movieRepository}) : super(const MovieDetailState(status: MovieDetailStatus.initial));
   final IMovieRepository movieRepository;
 

@@ -46,6 +46,7 @@ class _BaseNetworkImageState extends State<BaseNetworkImage> {
               widget.url!,
               key: ValueKey<String>(widget.url!),
               height: widget.height,
+              width: double.maxFinite,
               fit: widget.fit,
               alignment: widget.alignment?.call() ?? Alignment.center,
               frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

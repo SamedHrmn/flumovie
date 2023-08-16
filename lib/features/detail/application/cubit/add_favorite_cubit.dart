@@ -1,9 +1,8 @@
+import 'package:flumovie/core/util/flu_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/favorites_state.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-
-class AddFavoriteCubit extends HydratedCubit<FavoritesState> {
+class AddFavoriteCubit extends FluCubit<FavoritesState> {
   AddFavoriteCubit() : super(const FavoritesState(favorites: []));
 
   void addFavorite({required MovieDetail movieDetail}) {
