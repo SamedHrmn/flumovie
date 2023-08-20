@@ -9,9 +9,9 @@ enum FluIcon {
   settings(24),
   profile(24);
 
-  final double size;
-
   const FluIcon(this.size);
+
+  final double size;
 
   Widget toWidget({Color? color}) {
     switch (this) {

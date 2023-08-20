@@ -50,7 +50,7 @@ class FluBottomBarView extends StatelessWidget {
 //*-----------------------------------------------------------------------------
 
 class _FluBottomBarButton extends StatelessWidget {
-  const _FluBottomBarButton({required this.page, super.key});
+  const _FluBottomBarButton({required this.page});
 
   final FluBottomPages page;
 

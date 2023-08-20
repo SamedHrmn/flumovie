@@ -49,7 +49,7 @@ enum MovieApiUri {
     final queryMap = {
       'api_key': dotenv.get('API_KEY'),
     }..addAll(queryParameters ?? {});
-    print(Uri.https(_baseUrl, path, queryMap));
+
     return Uri.https(_baseUrl, path, queryMap);
   }
 }

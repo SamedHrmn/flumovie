@@ -6,9 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MovieSearchCubit extends Cubit<MovieSearchState> {
   MovieSearchCubit({required this.movieRepository})
-      : super(const MovieSearchState(
-          status: MovieSearchStatus.initial,
-        ));
+      : super(
+          const MovieSearchState(
+            status: MovieSearchStatus.initial,
+          ),
+        );
 
   final IMovieRepository movieRepository;
 
