@@ -1,4 +1,6 @@
-# FluMovie
+# FluMovie - Feature Based DDD Flutter Project
+
+![mordor](https://github.com/SamedHrmn/flumovie/assets/60006881/5ffc6011-064e-476d-a6e5-d23112895dbb)
 
 FluMovie is a simple Flutter project well structured which trying to implement some functionality from TMDB api. Im trying to focus in this project feature-based DDD architecture and testability.
 
