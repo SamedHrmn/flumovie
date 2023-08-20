@@ -30,6 +30,7 @@ class _NickNamePage extends StatelessWidget {
             onPressed: state.nickName.isEmpty
                 ? null
                 : () {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     context.read<PageManagerCubit>().updateOnboardSecondPage(true);
                   },
             child: FluText(

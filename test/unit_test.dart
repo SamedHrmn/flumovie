@@ -1,12 +1,4 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'dart:developer';
-
 import 'package:flumovie/core/api/dio_api_client.dart';
 import 'package:flumovie/core/api/i_api_client.dart';
 import 'package:flumovie/core/api/movie_api_uri.dart';
@@ -16,15 +8,13 @@ import 'package:flumovie/features/home/popular/application/popular_movie_dto.dar
 import 'package:flumovie/features/home/popular/domain/popular_movie.dart';
 import 'package:flumovie/features/home/upcoming/application/upcoming_movies_dto.dart';
 import 'package:flumovie/features/home/upcoming/domain/upcoming_movies.dart';
-
 import 'package:flumovie/features/search/application/movie_search_dto.dart';
 import 'package:flumovie/features/search/domain/movie_search.dart';
-
 import 'package:flumovie/shared/s_data/i_movie_repository.dart';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:flutter_test/flutter_test.dart';
+
+//* Test for Movie Api functionalities.
 
 class MockMovieRepository implements IMovieRepository {
   MockMovieRepository({

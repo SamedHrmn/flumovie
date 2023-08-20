@@ -31,7 +31,9 @@ void main() async {
       supportedLocales: const [Locale('en'), Locale('tr')],
       useOnlyLangCode: true,
       path: 'assets/translations',
-      child: const MyApp(),
+      child: MyApp(
+        navigatorObserver: FluNavigationObserver(),
+      ),
     ),
   );
 }
@@ -47,7 +49,9 @@ Future<void> initApp() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({required this.navigatorObserver, super.key});
+
+  final NavigatorObserver navigatorObserver;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +115,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         navigatorKey: NavigationManager.navigatorKey,
         navigatorObservers: [
-          FluNavigationObserver(),
+          navigatorObserver,
         ],
         home: FluNavigations.onboardView.toPage(),
       ),

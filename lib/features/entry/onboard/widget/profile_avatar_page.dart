@@ -28,6 +28,7 @@ class _ProfileAvatarPageState extends State<_ProfileAvatarPage> {
             children: viewData.avatarAssets
                 .map(
                   (e) => _ProfileAvatarSelection(
+                    key: ValueKey(e),
                     itemIndex: viewData.avatarAssets.indexOf(e),
                     avatarPath: e,
                     selectedItemIndex: viewData.avatarAssets.indexOf(viewData.avatarPath),
@@ -43,14 +44,16 @@ class _ProfileAvatarPageState extends State<_ProfileAvatarPage> {
               ? null
               : () {
                   context.read<ProfileCubit>().saveOnboardData(onboardDTO: viewData);
-                  NavigationManager.instance.goClearBackAll(context, des: FluNavigations.bottomBarView);
+                  NavigationManager.instance.goClearBackAll(des: FluNavigations.bottomBarView);
                 },
           child: FluText(
             text: LocalizationConstants.onboard_continue.tr(),
             color: viewData.avatarPath.isEmpty ? ColorConstant.textBlack : ColorConstant.textWhite,
           ),
         ),
-        const Spacer(flex: 2),
+        const Spacer(
+          flex: 2,
+        ),
       ],
     );
   }
@@ -64,6 +67,7 @@ class _ProfileAvatarSelection extends StatefulWidget {
     required this.selectedItemIndex,
     required this.onItemSelected,
     required this.avatarPath,
+    super.key,
   });
 
   final int itemIndex;

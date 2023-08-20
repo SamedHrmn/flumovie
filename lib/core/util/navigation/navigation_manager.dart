@@ -38,7 +38,7 @@ class NavigationManager {
         ),
       );
 
-  Future<void> goClearBackAll(BuildContext context, {required FluNavigations des}) => navigatorKey.currentState!.pushAndRemoveUntil(
+  Future<void> goClearBackAll({required FluNavigations des}) => navigatorKey.currentState!.pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => des.toPage(),
         ),

@@ -55,7 +55,7 @@ class _ProfileViewState extends State<ProfileView> {
                 onPressed: () async {
                   await LocalizationManager.instance.changeLanguage(context, Locale.fromSubtags(languageCode: subItem));
                   if (!mounted) return;
-                  await NavigationManager.instance.goClearBackAll(context, des: FluNavigations.bottomBarView);
+                  await NavigationManager.instance.goClearBackAll(des: FluNavigations.bottomBarView);
                 },
                 child: FluText(text: subItem),
               ),
