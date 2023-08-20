@@ -6,6 +6,7 @@ enum FluIcon {
   back(18),
   home(24),
   search(24),
+  settings(24),
   profile(24);
 
   final double size;
@@ -20,6 +21,8 @@ enum FluIcon {
         return _icon(Icons.home_outlined, color);
       case FluIcon.search:
         return _icon(Icons.search_outlined, color);
+      case FluIcon.settings:
+        return _icon(Icons.settings, color);
       case FluIcon.profile:
         return _icon(Icons.person_2_outlined, color);
     }

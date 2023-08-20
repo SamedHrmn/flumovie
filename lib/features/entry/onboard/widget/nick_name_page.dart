@@ -12,7 +12,7 @@ class _NickNamePage extends StatelessWidget {
         const Spacer(),
         FluText(
           text: LocalizationConstants.onboard_howCanWeCallYou.tr(),
-          size: 16,
+          size: 20,
           weight: FluTextWeight.bold,
         ),
         Padding(

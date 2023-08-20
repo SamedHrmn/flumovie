@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flumovie/core/components/custom/flu_circular_loader.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/features/home/popular/application/cubit/popular_movie_cubit.dart';
@@ -26,6 +27,7 @@ class _MovieHomeViewState extends State<MovieHomeView> with AutomaticKeepAliveCl
     super.build(context);
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           popularMovieBuilder(),
           upcomingMovieBuilder(),
@@ -48,9 +50,14 @@ class _MovieHomeViewState extends State<MovieHomeView> with AutomaticKeepAliveCl
             switch (state.status) {
               case UpcomingMoviesStatus.loading:
               case UpcomingMoviesStatus.initial:
-                return const CircularProgressIndicator.adaptive();
+                return const FluCircularLoader(
+                  padding: EdgeInsets.symmetric(vertical: 32),
+                );
               case UpcomingMoviesStatus.failure:
-                return FluText(text: LocalizationConstants.error_type1.tr());
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: FluText(text: LocalizationConstants.error_type1.tr()),
+                );
               case UpcomingMoviesStatus.success:
                 final upcomingMovies = state.upcomingMoviesDTO!.upcomingMovies;
 
@@ -68,9 +75,14 @@ class _MovieHomeViewState extends State<MovieHomeView> with AutomaticKeepAliveCl
         switch (state.status) {
           case PopularMovieStatus.loading:
           case PopularMovieStatus.initial:
-            return const CircularProgressIndicator.adaptive();
+            return const FluCircularLoader(
+              padding: EdgeInsets.symmetric(vertical: 148),
+            );
           case PopularMovieStatus.failure:
-            return FluText(text: LocalizationConstants.error_type1.tr());
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: FluText(text: LocalizationConstants.error_type1.tr()),
+            );
           case PopularMovieStatus.success:
             final popularMovies = state.popularMovieDTO!.popularMovies!;
 

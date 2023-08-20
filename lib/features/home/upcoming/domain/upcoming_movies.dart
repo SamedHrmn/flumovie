@@ -72,7 +72,7 @@ class Result {
   @JsonKey(name: 'id')
   final int? id;
   @JsonKey(name: 'original_language')
-  final OriginalLanguage? originalLanguage;
+  final String? originalLanguage;
   @JsonKey(name: 'original_title')
   final String? originalTitle;
   @JsonKey(name: 'overview')
@@ -93,15 +93,4 @@ class Result {
   final int? voteCount;
 
   Map<String, dynamic> toJson() => _$ResultToJson(this);
-}
-
-enum OriginalLanguage {
-  @JsonValue('en')
-  EN,
-  @JsonValue('fr')
-  FR,
-  @JsonValue('ja')
-  JA,
-  @JsonValue('nl')
-  NL
 }

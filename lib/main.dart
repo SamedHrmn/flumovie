@@ -48,6 +48,8 @@ Future<void> initApp() async {
   await FluCubit.init(dir: await getApplicationDocumentsDirectory());
 }
 
+//*-----------------------------------------------------------------------------
+
 class MyApp extends StatelessWidget {
   const MyApp({required this.navigatorObserver, super.key});
 
@@ -107,18 +109,22 @@ class MyApp extends StatelessWidget {
           create: (context) => PageManagerCubit(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.light(useMaterial3: true),
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        localizationsDelegates: context.localizationDelegates,
-        navigatorKey: NavigationManager.navigatorKey,
-        navigatorObservers: [
-          navigatorObserver,
-        ],
-        home: FluNavigations.onboardView.toPage(),
-      ),
+      child: materialApp(context),
+    );
+  }
+
+  MaterialApp materialApp(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(useMaterial3: true),
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      localizationsDelegates: context.localizationDelegates,
+      navigatorKey: NavigationManager.navigatorKey,
+      navigatorObservers: [
+        navigatorObserver,
+      ],
+      home: FluNavigations.onboardView.toPage(),
     );
   }
 }

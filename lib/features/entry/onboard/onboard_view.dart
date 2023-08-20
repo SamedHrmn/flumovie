@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flumovie/core/components/custom/flu_circle_avatar.dart';
 import 'package:flumovie/core/components/custom/flu_primary_button.dart';

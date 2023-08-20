@@ -4,13 +4,13 @@ import 'package:flumovie/core/components/custom/flu_network_image.dart';
 import 'package:flumovie/core/components/custom/flutext.dart';
 import 'package:flumovie/core/constants/localization_constant.dart';
 import 'package:flumovie/core/gen/assets.gen.dart';
-import 'package:flumovie/core/util/localization_manager.dart';
 import 'package:flumovie/core/util/navigation/navigation_manager.dart';
 import 'package:flumovie/features/detail/application/cubit/add_favorite_cubit.dart';
 import 'package:flumovie/features/detail/application/cubit/favorites_state.dart';
 import 'package:flumovie/features/detail/domain/movie_detail.dart';
 import 'package:flumovie/features/profile/application/profile_cubit.dart';
 import 'package:flumovie/features/profile/application/profile_dto.dart';
+import 'package:flumovie/features/profile/presentation/profile_view_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,111 +21,44 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
-  }
-
-  void showMenuWithDynamicPosition(BuildContext context, {required Map<String, List<String>> menuItems}) {
-    final button = context.findRenderObject() as RenderBox?;
-    if (button == null) return;
-
-    final offset = button.localToGlobal(Offset(0, button.size.height));
-    final position = RelativeRect.fromLTRB(
-      offset.dx,
-      offset.dy,
-      offset.dx + button.size.width,
-      offset.dy,
-    );
-
-    final menuEntries = menuItems.entries.map((entry) {
-      final submenuItems = entry.value.map((subItem) {
-        return PopupMenuItem<String>(
-          value: subItem,
-          child: Row(
-            children: [
-              Icon(
-                Icons.circle,
-                color: context.locale.languageCode == subItem ? Colors.green : Colors.transparent,
-                size: 12,
-              ),
-              MenuItemButton(
-                onPressed: () async {
-                  await LocalizationManager.instance.changeLanguage(context, Locale.fromSubtags(languageCode: subItem));
-                  if (!mounted) return;
-                  await NavigationManager.instance.goClearBackAll(des: FluNavigations.bottomBarView);
-                },
-                child: FluText(text: subItem),
-              ),
-            ],
-          ),
-        );
-      }).toList();
-
-      return PopupMenuItem<String>(
-        value: entry.key,
-        padding: EdgeInsets.zero,
-        child: SubmenuButton(
-          menuChildren: submenuItems,
-          alignmentOffset: Offset(-button.size.width, 24),
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: FluText(text: entry.key),
-        ),
-      );
-    }).toList();
-
-    showMenu<void>(
-      context: context,
-      position: position,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      items: menuEntries,
-    );
-  }
-
+class _ProfileViewState extends State<ProfileView> with ProfileViewMixin {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              profileInformationBuilder(),
-              Builder(
-                builder: (context) {
-                  return FluIconButton(
-                    icon: FluIcon.home,
-                    onPressed: () {
-                      showMenuWithDynamicPosition(
-                        context,
-                        menuItems: {
-                          LocalizationConstants.profile_languageSettings.tr(): context.supportedLocales
-                              .map(
-                                (e) => e.toLanguageTag(),
-                              )
-                              .toList(),
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-          favorites(),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            profileInformationBuilder(),
+            settingsButton(),
+          ],
+        ),
+        favorites(),
+      ],
+    );
+  }
+
+  Builder settingsButton() {
+    return Builder(
+      builder: (context) {
+        return FluIconButton(
+          icon: FluIcon.settings,
+          onPressed: () {
+            showMenuWithDynamicPosition(
+              context,
+              menuItems: {
+                LocalizationConstants.profile_languageSettings.tr(): context.supportedLocales
+                    .map(
+                      (e) => e.toLanguageTag().toUpperCase(),
+                    )
+                    .toList(),
+              },
+            );
+          },
+        );
+      },
     );
   }
 
@@ -180,7 +113,7 @@ class _ProfileViewState extends State<ProfileView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: FluText(
         text: LocalizationConstants.profile_yourFavorites.tr(),
-        size: 16,
+        size: 20,
         weight: FluTextWeight.bold,
       ),
     );

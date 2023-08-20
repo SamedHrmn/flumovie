@@ -17,7 +17,7 @@ class _ProfileAvatarPageState extends State<_ProfileAvatarPage> {
         const Spacer(),
         FluText(
           text: LocalizationConstants.onboard_chooseYourAvatar.tr(),
-          size: 16,
+          size: 20,
           weight: FluTextWeight.bold,
         ),
         Padding(
@@ -25,6 +25,8 @@ class _ProfileAvatarPageState extends State<_ProfileAvatarPage> {
           child: GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
             children: viewData.avatarAssets
                 .map(
                   (e) => _ProfileAvatarSelection(
@@ -84,36 +86,50 @@ class _ProfileAvatarSelectionState extends State<_ProfileAvatarSelection> {
   Widget build(BuildContext context) {
     final isSelected = widget.itemIndex == widget.selectedItemIndex;
 
-    return GestureDetector(
-      onTap: () {
-        widget.onItemSelected(widget.itemIndex);
-      },
-      child: Stack(
-        children: [
-          Positioned(
-            right: 24,
-            top: 24,
-            child: FluCircleAvatar(
-              radius: 64,
-              url: widget.avatarPath,
+    return Material(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(),
+      ),
+      child: InkWell(
+        onTap: () {
+          widget.onItemSelected(widget.itemIndex);
+        },
+        child: Stack(
+          children: [
+            Positioned(
+              right: 24,
+              top: 24,
+              child: FluCircleAvatar(
+                radius: 64,
+                url: widget.avatarPath,
+              ),
             ),
-          ),
-          Positioned(
-            right: 16,
-            top: 16,
-            child: Container(
-              width: 24,
-              height: 24,
-              color: isSelected ? ColorConstant.textBlack : ColorConstant.textWhite,
-              child: isSelected
-                  ? const Icon(
-                      Icons.check,
-                      color: ColorConstant.textWhite,
-                    )
-                  : null,
+            Positioned(
+              right: 12,
+              top: 12,
+              child: AnimatedContainer(
+                width: 24,
+                height: 24,
+                duration: const Duration(milliseconds: 300),
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: isSelected ? ColorConstant.textBlack : ColorConstant.textWhite,
+                ),
+                child: isSelected
+                    ? const FittedBox(
+                        child: Icon(
+                          Icons.check_rounded,
+                          color: ColorConstant.textWhite,
+                        ),
+                      )
+                    : null,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -151,7 +151,7 @@ class _SearchResultGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
